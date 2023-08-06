@@ -97,7 +97,11 @@ function nth(list, number) {
 
 function deepEqual(a, b) {
     if (a === b) return true;
-    else if (a == null || b == null) return false; // use == incase undefined is used 
+    else if (a == null || b == null) return false; 
+    /* use == incase undefined is used. Also helps spot whether keys in both lists 
+    are identical as if they arent then b[key] would give undefined and hence false 
+    is returned. Same effect as if (!keysB.includes(key) || !deepEqual(a[key], b[key])) 
+    return false; */
     else if (typeof a === 'object' && typeof b === 'object') {
         let keysA = Object.keys(a), keysB = Object.keys(b);
         if (keysA.length !== keysB.length) return false;
@@ -110,10 +114,12 @@ function deepEqual(a, b) {
 }
 
 
-// let obj = {here: {is: "an"}, object: 2};
-// console.log(deepEqual(obj, obj));
-// // → true
-// console.log(deepEqual(obj, {here: 1, object: 2}));
-// // → false
-// console.log(deepEqual(obj, {here: {is: "an"}, object: 2}));
-// // → true
+
+
+let obj = {here: {is: "an"}, object: 2};
+console.log(deepEqual(obj, obj));
+// → true
+console.log(deepEqual(obj, {here: 1, object: 2}));
+// → false
+console.log(deepEqual(obj, {here: {is: "an"}, object: 2}));
+// → true
