@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>eqjs ch14 ex2</title>
+	</head>
+	<body>
+		<h1>Heading with a <span>span</span> element.</h1>
+		<p>A paragraph with <span>one</span>, <span>two</span> spans.</p>
+
+		<script>
+			function byTagName(node, tagName) { 
+				let matchedNodes = [];
+				let queue = [node]; //Breadth-first search
+				while (queue.length > 0) {
+					let currentNode = queue.shift();
+					if (currentNode.nodeName === tagName.toUpperCase()) matchedNodes.push(currentNode);
+					for (let child of currentNode.children) {
+						queue.push(child);
+					}
+				}
+				return matchedNodes;
+			}
+
+			console.log(byTagName(document.body, "h1"));
+			//→ 1
+			console.log(byTagName(document.body, "span"));
+			// → 3
+			let para = document.querySelector("p");
+			console.log(byTagName(para, "span"));
+			//→ 2
+		</script>
+	</body>
+</html>

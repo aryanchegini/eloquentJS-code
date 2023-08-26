@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>The Cat's Hat</title>
+	</head>
+	<body>
+		<style>
+			body {
+				min-height: 200px;
+			}
+		</style>
+		<img src="img/cat.png" id="cat" style="position: absolute" />
+		<img src="img/hat.png" id="hat" style="position: absolute" />
+
+		<script>
+			let cat = document.querySelector("#cat");
+			let hat = document.querySelector("#hat");
+
+			let angle = 0;
+			let lastTime = null;
+			function animate(time) {
+				if (lastTime != null) angle += (time - lastTime) * 0.001;
+				lastTime = time;
+                catX = Math.cos(angle) * 200 + 300;
+                catY = Math.sin(angle) * 40 + 500;
+				cat.style.top = catY + "px";
+				cat.style.left = catX + "px";
+
+
+                // Make the hat orbit around the cat
+                hat.style.top = Math.sin(angle) * 50 + catY + "px";
+                hat.style.left = Math.cos(angle) * 50 + catX + "px";
+
+
+				requestAnimationFrame(animate);
+			}
+			requestAnimationFrame(animate);
+		</script>
+	</body>
+</html>
