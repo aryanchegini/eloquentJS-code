@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>balloon</title>
+	</head>
+	<body>
+		<p style="font-size: 16px;">🎈</p>
+
+		<script>
+            let para = document.querySelector('p');
+            function changeFont(currentFont, increase=true) {
+                return increase ? currentFont.slice(0, -2)*1.1 + 'px' : currentFont.slice(0, -2)*0.9 + 'px';
+            }
+            function balloonLogic(event) {
+                if (para.style.fontSize.slice(0, -2) > 50) {
+                    para.textContent = '💥';
+                    window.removeEventListener('keydown', balloonLogic)
+                } else if (event.key == "ArrowUp") {
+                    console.log('first branch');
+                    para.style.fontSize = changeFont(para.style.fontSize);
+                } else if (event.key == 'ArrowDown') {
+                    console.log('second branch');
+                    para.style.fontSize = changeFont(para.style.fontSize, false);
+                }
+            }
+
+            window.addEventListener('keydown', balloonLogic)
+        </script>
+	</body>
+</html>

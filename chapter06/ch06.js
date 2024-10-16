@@ -52,8 +52,14 @@ class Group {
         return new Group(arr)
     }
 
-    [Symbol.iterator]() {
-        return new GroupIterator(this);
+    // [Symbol.iterator]() {
+    //     return new GroupIterator(this);
+    // }
+
+    [Symbol.iterator] =  function*() { 
+        for (let i = 0; i < this.values.length; i++) {
+            yield this.values[i];
+        } 
     }
 }
 

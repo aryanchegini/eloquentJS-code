@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>tabs</title>
+	</head>
+	<body>
+		<tab-panel>
+			<div data-tabname="one">Tab one</div>
+			<div data-tabname="two">Tab two</div>
+			<div data-tabname="three">Tab three</div>
+            <div data-tabname="four">Tab four</div>
+		</tab-panel>
+		<style>
+			.hidden-page {
+				display: none;
+			}
+
+			.visible-page {
+				display: block;
+			}
+
+            .on-tab {
+                color: red;
+            }
+		</style>
+		<script>
+			function asTabs(node) {
+				const tabNames = getTabNames(node);
+				const pages = document.querySelectorAll("div[data-tabname]");
+
+				for (let i = 0; i < pages.length; i++) {
+					pages[i].classList.add("hidden-page");
+				}
+
+
+				let count = 0;
+                let buttons = [];
+				for (let tab of tabNames) {
+					const button = document.createElement("button");
+					button.setAttribute("page-number", count);
+					button.innerHTML = tab;
+                    buttons.push(button)
+					node.insertBefore(button, pages[0]);
+					count++;
+				}
+
+                pages[0].classList.add("visible-page");
+                buttons[0].classList.add("on-tab");
+
+				document.querySelectorAll("button").forEach((button) => {
+					button.addEventListener("click", (event) => {
+						let buttonIndex = event.target.getAttribute("page-number");
+						for (let i = 0; i < pages.length; i++) {
+                            if (i == buttonIndex) {
+                                pages[i].classList.add("visible-page");
+                                buttons[i].classList.add("on-tab");
+                            } else {
+                                pages[i].classList.remove("visible-page");
+                                buttons[i].classList.remove("on-tab");
+                            };
+						}
+					});
+				});
+			}
+
+			function getTabNames(node) {
+				const tabNames = [];
+				for (let child of Array.from(node.children)) {
+					tabNames.push(child.getAttribute("data-tabname"));
+				}
+				return tabNames;
+			}
+			asTabs(document.querySelector("tab-panel"));
+		</script>
+	</body>
+</html>
